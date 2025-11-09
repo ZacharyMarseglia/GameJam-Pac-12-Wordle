@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Washington State",
+    "state": "Washington",
+    "city": "Pullman",
+    "colors": ["Crimson", "Gray"],
+    "mascot": "Cougars",
+    "stadium_capacity": 32952,
+    "previous_conference": "Pac-12"
+  },
+  {
+    "id": 2,
+    "name": "Oregon State",
+    "state": "Oregon",
+    "city": "Corvallis",
+    "colors": ["Orange", "Black"],
+    "mascot": "Beavers",
+    "stadium_capacity": 35098,
+    "previous_conference": "Pac-12"
+  },
+  {
+    "id": 3,
+    "name": "Boise State",
+    "state": "Idaho",
+    "city": "Boise",
+    "colors": ["Blue", "Orange"],
+    "mascot": "Broncos",
+    "stadium_capacity": 36987,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 4,
+    "name": "San Diego State",
+    "state": "California",
+    "city": "San Diego",
+    "colors": ["Black", "Red"],
+    "mascot": "Aztecs",
+    "stadium_capacity": 35100,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 5,
+    "name": "Fresno State",
+    "state": "California",
+    "city": "Fresno",
+    "colors": ["Red", "White", "Blue"],
+    "mascot": "Bulldogs",
+    "stadium_capacity": 41031,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 6,
+    "name": "Colorado State",
+    "state": "Colorado",
+    "city": "Fort Collins",
+    "colors": ["Green", "Gold"],
+    "mascot": "Rams",
+    "stadium_capacity": 41000,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 7,
+    "name": "Wyoming",
+    "state": "Wyoming",
+    "city": "Laramie",
+    "colors": ["Brown", "Gold"],
+    "mascot": "Cowboys",
+    "stadium_capacity": 29315,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 8,
+    "name": "Air Force",
+    "state": "Colorado",
+    "city": "Colorado Springs",
+    "colors": ["Blue", "White"],
+    "mascot": "Falcons",
+    "stadium_capacity": 46992,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 9,
+    "name": "Utah State",
+    "state": "Utah",
+    "city": "Logan",
+    "colors": ["Navy", "White"],
+    "mascot": "Aggies",
+    "stadium_capacity": 25600,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 10,
+    "name": "Nevada",
+    "state": "Nevada",
+    "city": "Reno",
+    "colors": ["Navy", "Silver"],
+    "mascot": "Wolf Pack",
+    "stadium_capacity": 27000,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 11,
+    "name": "UNLV",
+    "state": "Nevada",
+    "city": "Las Vegas",
+    "colors": ["Scarlet", "Gray"],
+    "mascot": "Rebels",
+    "stadium_capacity": 65000,
+    "previous_conference": "Mountain West"
+  },
+  {
+    "id": 12,
+    "name": "New Mexico",
+    "state": "New Mexico",
+    "city": "Albuquerque",
+    "colors": ["Cherry", "Silver"],
+    "mascot": "Lobos",
+    "stadium_capacity": 39000,
+    "previous_conference": "Mountain West"
+  }
+]
