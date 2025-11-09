@@ -5,216 +5,196 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pac-12 Wordle — New Teams</title>
 
-  <style>
-:root{
-  --pac-blue:#002244; /* deep Pac-12-esque blue */
-  --pac-gold:#C8A24E; /* subtle gold highlight */
-  --bg:#0f172a;
-  --card:#111827;
-  --text:#e5e7eb;
-  --muted:#94a3b8;
-  --green:#16a34a;
-  --yellow:#eab308;
-  --red:#dc2626;
-  --border:#1f2937;
-  --shadow: rgba(0,0,0,.35);
+<style>
+:root {
+  --navy: #001F3F;
+  --navy-dark: #001733;
+  --gold: #FFD700;
+  --bg: #0d1117;
+  --card: #161b22;
+  --border: #30363d;
+  --text: #f0f6fc;
+  --muted: #8b949e;
+  --green: #198754;
+  --yellow: #f1c40f;
+  --red: #e74c3c;
 }
 
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif}
-
-.app-header{
-  display:flex;align-items:center;gap:.75rem;padding:1rem 1.25rem;
-  border-bottom:1px solid var(--border);
-  background:linear-gradient(180deg,var(--pac-blue),#061733 70%);
-  position:sticky;top:0;z-index:10;
+/* Global */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
-.app-header h1{margin:0;font-size:1.2rem;letter-spacing:.5px}
-.scoreboard{
-  font-weight:800;border:2px solid var(--pac-gold);padding:.1rem .4rem;border-radius:.4rem;
-  box-shadow:0 1px 0 var(--pac-gold) inset, 0 0 0 3px rgba(200,162,78,.2);
+
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 26px;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%);
+  border-bottom: 3px solid var(--gold);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
-.badge{
-  width:42px;height:42px;color:var(--pac-gold);
-  display:grid;place-items:center;background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:.6rem;box-shadow:0 6px 16px var(--shadow);
+
+.badge svg {
+  width: 56px;
+  height: 56px;
+  fill: var(--gold);
 }
-.badge svg{width:28px;height:28px;fill:currentColor;color:var(--pac-gold)}
 
-.container{max-width:1000px;margin:1.25rem auto;padding:0 1rem}
-
-.controls{
-  background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;
-  box-shadow:0 8px 24px var(--shadow);margin-bottom:1rem;
+.scoreboard {
+  background: var(--gold);
+  padding: 6px 14px;
+  color: #000;
+  font-weight: 700;
+  border-radius: 6px;
 }
-.controls .row{display:flex;gap:.5rem;flex-wrap:wrap}
-.controls input{
-  flex:1;min-width:240px;background:#0b1222;border:1px solid var(--border);color:var(--text);
-  border-radius:10px;padding:.8rem .9rem;outline:none;
+
+/* Layout */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
 }
-.controls button{
-  background:var(--pac-gold);color:#131313;border:none;border-radius:10px;padding:.8rem 1rem;font-weight:700;cursor:pointer;
+
+/* Controls */
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
 }
-.controls button.secondary{
-  background:transparent;color:var(--text);border:1px solid var(--border)
+
+input#guessInput {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
 }
-.controls button:active{transform:translateY(1px)}
 
-.timer{
-  margin-top:.6rem;font-weight:700;color:var(--yellow);
+button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
 }
-.hidden{display:none}
 
-.legend{margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap}
-.chip{
-  display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .5rem;border-radius:999px;font-size:.8rem;border:1px solid var(--border);background:#0b1222;
+#guessBtn {
+  background: var(--gold);
+  color: #000;
 }
-.chip::before{content:"";width:.65rem;height:.65rem;border-radius:50%}
-.chip.green::before{background:var(--green)}
-.chip.yellow::before{background:var(--yellow)}
-.chip.red::before{background:var(--red)}
+#guessBtn:hover { background: #ffdb4d; }
 
-.table-wrap{
-  background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:auto;
-  box-shadow:0 8px 24px var(--shadow);
+button.secondary {
+  background: var(--muted);
+  color: white;
 }
-.grid{width:100%;border-collapse:separate;border-spacing:0}
-.grid thead th{
-  position:sticky;top:0;background:#0d1426;color:var(--muted);font-weight:700;
-  text-align:left;padding:.75rem;border-bottom:1px solid var(--border)
+button.secondary:hover { background: #a1a7b3; }
+
+/* Legend */
+.legend { margin-bottom: 12px; }
+.chip {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: .85rem;
+  color: white;
 }
-.grid td{
-  padding:.65rem .75rem;border-bottom:1px solid var(--border);white-space:nowrap;
+.green { background: var(--green); }
+.yellow { background: var(--yellow); color: #000; }
+.red { background: var(--red); }
+
+/* Table */
+.table-wrap { overflow-x: auto; }
+
+.grid {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--border);
+  margin-top: 20px;
 }
-.badgeCell{
-  display:inline-block;padding:.2rem .5rem;border-radius:999px;border:1px solid var(--border);background:#0b1222;font-size:.8rem
+.grid th, .grid td {
+  padding: 10px;
+  border: 1px solid var(--border);
+  text-align: center;
 }
-.cell{border-radius:8px;display:inline-block;padding:.25rem .5rem}
-.cell.green{background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.45)}
-.cell.yellow{background:rgba(234,179,8,.18);border:1px solid rgba(234,179,8,.45)}
-.cell.red{background:rgba(220,38,38,.18);border:1px solid rgba(220,38,38,.45)}
-
-.win-card{
-  margin-top:1rem;padding:1rem;background:var(--card);border:1px solid var(--border);border-radius:12px;
-  box-shadow:0 8px 24px var(--shadow);
+.grid th {
+  background: var(--navy);
+  color: var(--gold);
 }
-.win-title{font-size:1.15rem;margin:0 0 .5rem}
-.color-chip{display:inline-block;margin-right:.4rem;margin-bottom:.3rem;padding:.25rem .5rem;border-radius:8px;border:1px solid var(--border);background:#0b1222}
 
-.footer{padding:1rem;color:var(--muted);text-align:center}
-
-@media (max-width:640px){
-  .app-header h1{font-size:1rem}
-  .grid td, .grid th{padding:.55rem}
+/* Win Card */
+.win-card {
+  margin-top: 28px;
+  padding: 18px;
+  background: var(--navy);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
 }
-  body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    background: #f5f6fa;
-    color: #111;
-  }
 
-  .app-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    background: #003366;
-    color: white;
-    border-bottom: 4px solid #0077cc;
-  }
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 50px;
+  padding: 18px;
+  font-size: .85rem;
+  color: var(--muted);
+}
 
-  .badge svg {
-    width: 48px;
-    height: 48px;
-    fill: white;
-  }
+.hidden { display: none; }
+</style>
 
-  .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 18px;
-  }
-
-  .row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  input#guessInput {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #bbb;
-  }
-
-  button {
-    padding: 10px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    background: #0077cc;
-    color: white;
-  }
-  button.secondary {
-    background: #888;
-  }
-
-  .timer {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-
-  .legend {
-    margin-bottom: 10px;
-  }
-  .chip {
-    padding: 4px 10px;
-    border-radius: 4px;
-    color: white;
-    font-size: .85rem;
-  }
-  .green { background: #28a745; }
-  .yellow { background: #ffc107; color: #333; }
-  .red { background: #dc3545; }
-
-  .table-wrap {
-    overflow-x: auto;
-    margin-top: 12px;
-  }
-
-  .grid {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-  }
-  .grid th, .grid td {
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-  }
-
-  .win-card {
-    margin-top: 20px;
-    padding: 18px;
-    background: #0077cc;
-    color: white;
-    border-radius: 8px;
-    text-align: center;
-  }
-
-  .hidden { display: none; }
-
-  .footer {
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px;
-    font-size: .85rem;
-    color: #666;
-  }
-  </style>
 </head>
+
 <body>
+<header class="app-header">
+  <div class="badge">
+    <svg viewBox="0 0 64 64"><path d="M8 8h48v26c0 6-3 12-8 16L32 58 16 50c-5-4-8-10-8-16V8z"/></svg>
+  </div>
+  <h1><span class="scoreboard">PAC-12</span> New Teams — Guessing Game</h1>
+</header>
+
+<main class="container">
+  <section class="controls">
+    <div class="row">
+      <input id="guessInput" type="text" placeholder="Type a team (e.g., Fresno State)" autocomplete="off" />
+      <button id="guessBtn">Guess</button>
+      <button id="restartBtn" class="secondary">Restart</button>
+    </div>
+    <div id="timer" class="timer hidden">Timer: 5</div>
+    <div id="legend" class="legend">
+      <span class="chip green">Green = Exact</span>
+      <span class="chip yellow">Yellow = Close</span>
+      <span class="chip red">Red = No match</span>
+    </div>
+  </section>
+
+  <section class="table-wrap">
+    <table class="grid">
+      <thead>
+        <tr>
+          <th>Team</th><th>State</th><th>City</th><th>Team Colors</th><th>Mascot</th><th>Stadium Size</th><th>Previous Conference</th>
+        </tr>
+      </thead>
+      <tbody id="gridBody"></tbody>
+    </table>
+  </section>
+
+  <section id="winCard" class="win-card hidden"></section>
+</main>
+
+<footer class="footer">
+  <small>Pac-12-inspired theme. Single-round gameplay. Mobile-friendly.</small>
+</footer>
+
+<script src="/app.js" type="module"></script>
+</body>
+</html>
