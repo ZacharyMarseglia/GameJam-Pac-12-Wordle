@@ -1,5 +1,5 @@
 {
-  "AWSEBDockerrunVersion": 1,
+  "AWSEBDockerrunVersion": "1",
   "Image": {
     "Name": "407894220128.dkr.ecr.us-west-2.amazonaws.com/pac12-wordle:latest",
     "Update": "true"
