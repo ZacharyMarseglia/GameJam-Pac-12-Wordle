@@ -1,0 +1,18 @@
+branch-defaults:
+  feat/pac12-wordle:
+    environment: pac12-env
+    group_suffix: null
+global:
+  application_name: GameJam-Pac-12-Wordle
+  branch: null
+  default_ec2_keyname: null
+  default_platform: Docker
+  default_region: us-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application
