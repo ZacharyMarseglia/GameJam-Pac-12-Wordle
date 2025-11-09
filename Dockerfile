@@ -2,11 +2,15 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install --omit=dev
+# Copy package files and install
+COPY package.json package-lock.json* ./
+RUN npm ci --omit=dev
 
+# Copy everything, including data/
 COPY . .
 
-EXPOSE 8080
+# Ensure Node runs in production mode
+ENV NODE_ENV=production
 
+EXPOSE 8080
 CMD ["node", "server.js"]
