@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pac-12 Wordle — New Teams</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="badge" aria-label="Conference badge" title="Pac-12 Badge">
+      <!-- Simple Pac-12-ish shield placeholder -->
+      <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
+        <path d="M8 8h48v26c0 6-3 12-8 16L32 58 16 50c-5-4-8-10-8-16V8z"></path>
+        <text x="32" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="currentColor">12</text>
+      </svg>
+    </div>
+    <h1><span class="scoreboard">PAC-12</span> New Teams — Guessing Game</h1>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <div class="row">
+        <input id="guessInput" type="text" placeholder="Type a team (e.g., Boise State)" autocomplete="off" />
+        <button id="guessBtn">Guess</button>
+        <button id="restartBtn" class="secondary">Restart</button>
+      </div>
+      <div id="timer" class="timer hidden" aria-live="polite">Timer: 5</div>
+      <div id="legend" class="legend">
+        <span class="chip green">Green = Exact</span>
+        <span class="chip yellow">Yellow = Close</span>
+        <span class="chip red">Red = No match</span>
+      </div>
+    </section>
+
+    <section class="table-wrap">
+      <table class="grid" aria-label="Guess results">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Team Colors</th>
+            <th>Mascot</th>
+            <th>Stadium Size</th>
+            <th>Previous Conference</th>
+          </tr>
+        </thead>
+        <tbody id="gridBody"></tbody>
+      </table>
+    </section>
+
+    <section id="winCard" class="win-card hidden" aria-live="polite"></section>
+  </main>
+
+  <footer class="footer">
+    <small>Pac-12-inspired theme. Single-round gameplay. Mobile-friendly.</small>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
