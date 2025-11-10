@@ -2,6 +2,12 @@ branch-defaults:
   feat/pac12-wordle:
     environment: pac12-env
     group_suffix: null
+  main:
+    environment: pac12-env
+environment-defaults:
+  pac12-env:
+    branch: null
+    repository: null
 global:
   application_name: GameJam-Pac-12-Wordle
   branch: null

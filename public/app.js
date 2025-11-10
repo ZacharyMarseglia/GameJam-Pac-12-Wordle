@@ -4,6 +4,10 @@ let roundToken = null;
 let startedTimer = false;
 let timerId = null;
 let timeLeft = 5;
+let guessCount = 0;
+let maxGuesses = 5;
+let locked = false;
+
 
 const guessInput = document.getElementById("guessInput");
 const guessBtn = document.getElementById("guessBtn");
@@ -34,15 +38,20 @@ async function init() {
 async function restartRound() {
   const { roundToken: token } = await api("/api/random");
   roundToken = token;
-  // Reset UI
+
+  guessCount = 0;          
+  locked = false;          
+  resetTimer();
+
   gridBody.innerHTML = "";
   winCard.classList.add("hidden");
   winCard.innerHTML = "";
   guessInput.value = "";
+  guessInput.disabled = false;
+  guessBtn.disabled = false;
   guessInput.focus();
-  resetTimer();
-  startedTimer = false;
 }
+
 
 function resetTimer() {
   if (timerId) clearInterval(timerId);
@@ -98,27 +107,35 @@ function pretty(color) {
 function startTimer() {
   if (startedTimer) return;
   startedTimer = true;
+
   timerEl.classList.remove("hidden");
   timeLeft = 5;
   timerEl.textContent = `Timer: ${timeLeft}`;
+
   timerId = setInterval(() => {
     timeLeft--;
     timerEl.textContent = `Timer: ${timeLeft}`;
+
     if (timeLeft <= 0) {
       clearInterval(timerId);
-      // lock row: effectively we just force focus to input for next guess
-      guessInput.value = "";
-      timerEl.classList.add("hidden");
-      startedTimer = false; // re-start on next guess row
+      gameOver("Time's up!");
     }
   }, 1000);
 }
 
-// Guess handler
+
+
 async function onGuess() {
+  if (locked) return;
+
   const val = guessInput.value.trim();
   if (!val) return;
-  // Basic normalization + allow minor punctuation/accents differences
+
+  // Start timer after first guess
+  if (guessCount === 0) startTimer();
+
+  guessCount++;
+
   const match = teams.find(t => normalize(t) === normalize(val));
   const guessName = match || val;
 
@@ -129,17 +146,21 @@ async function onGuess() {
 
   renderRow(guessName, data.result);
 
-  if (!startedTimer) startTimer();
-
   if (data.win) {
     showWinCard(data.answer);
     resetTimer();
-  } else {
-    // Prepare for next guess quickly
-    guessInput.value = "";
-    guessInput.focus();
+    return;
   }
+
+  if (guessCount >= maxGuesses) {
+    gameOver("No guesses left!");
+    return;
+  }
+
+  guessInput.value = "";
+  guessInput.focus();
 }
+
 
 function showWinCard(ans) {
   winCard.innerHTML = `
@@ -158,6 +179,25 @@ function showWinCard(ans) {
   const btn = winCard.querySelector("#playAgainBtn");
   btn.addEventListener("click", restartRound);
   winCard.classList.remove("hidden");
+}
+function gameOver(reason) {
+  locked = true;
+  guessInput.disabled = true;
+  guessBtn.disabled = true;
+
+  timerEl.classList.add("hidden");
+
+  // Reveal answer
+  api("/api/random"); // optional: refresh token so game can't continue
+
+  winCard.classList.remove("hidden");
+  winCard.innerHTML = `
+    <h2>${reason}</h2>
+    <p>The correct answer was: <strong>${currentAnswer.name}</strong></p>
+    <button id="playAgainBtn">Play Again</button>
+  `;
+  
+  document.getElementById("playAgainBtn").onclick = restartRound;
 }
 
 // Events
