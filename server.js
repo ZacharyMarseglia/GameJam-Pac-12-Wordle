@@ -16,16 +16,21 @@ const PORT = process.env.PORT || 8080;
 const COOKIE_SECRET = process.env.COOKIE_SECRET || "devsecret";
 
 // Security
+
 app.use(helmet({
   contentSecurityPolicy: {
     useDefaults: true,
     directives: {
+      "default-src": ["'self'"],
       "img-src": ["'self'", "data:"],
-      "script-src": ["'self'"],
-      "style-src": ["'self'", "'unsafe-inline'"]
+      "script-src": ["'self'"],                // module script /app.js is fine
+      "style-src": ["'self'", "'unsafe-inline'"] // <-- allow your <style> tag
     }
   }
 }));
+
+
+
 app.disable("x-powered-by");
 
 // Rate limit (simple)
