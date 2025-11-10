@@ -23,11 +23,13 @@ app.use(helmet({
     directives: {
       "default-src": ["'self'"],
       "img-src": ["'self'", "data:"],
-      "script-src": ["'self'"],                // module script /app.js is fine
-      "style-src": ["'self'", "'unsafe-inline'"] // <-- allow your <style> tag
+      "script-src": ["'self'", "'unsafe-inline'"],
+      "style-src": ["'self'", "'unsafe-inline'"],
+      "connect-src": ["'self'"]
     }
   }
 }));
+
 
 
 
