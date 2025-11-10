@@ -4,59 +4,197 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pac-12 Wordle — New Teams</title>
-  <link rel="stylesheet" href="styles.css" />
+
+<style>
+:root {
+  --navy: #001F3F;
+  --navy-dark: #001733;
+  --gold: #FFD700;
+  --bg: #0d1117;
+  --card: #161b22;
+  --border: #30363d;
+  --text: #f0f6fc;
+  --muted: #8b949e;
+  --green: #198754;
+  --yellow: #f1c40f;
+  --red: #e74c3c;
+}
+
+/* Global */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 26px;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%);
+  border-bottom: 3px solid var(--gold);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.badge svg {
+  width: 56px;
+  height: 56px;
+  fill: var(--gold);
+}
+
+.scoreboard {
+  background: var(--gold);
+  padding: 6px 14px;
+  color: #000;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+/* Layout */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Controls */
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+input#guessInput {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+}
+
+button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+#guessBtn {
+  background: var(--gold);
+  color: #000;
+}
+#guessBtn:hover { background: #ffdb4d; }
+
+button.secondary {
+  background: var(--muted);
+  color: white;
+}
+button.secondary:hover { background: #a1a7b3; }
+
+/* Legend */
+.legend { margin-bottom: 12px; }
+.chip {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: .85rem;
+  color: white;
+}
+.green { background: var(--green); }
+.yellow { background: var(--yellow); color: #000; }
+.red { background: var(--red); }
+
+/* Table */
+.table-wrap { overflow-x: auto; }
+
+.grid {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--border);
+  margin-top: 20px;
+}
+.grid th, .grid td {
+  padding: 10px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.grid th {
+  background: var(--navy);
+  color: var(--gold);
+}
+
+/* Win Card */
+.win-card {
+  margin-top: 28px;
+  padding: 18px;
+  background: var(--navy);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 50px;
+  padding: 18px;
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.hidden { display: none; }
+</style>
+
 </head>
+
 <body>
-  <header class="app-header">
-    <div class="badge" aria-label="Conference badge" title="Pac-12 Badge">
-      <!-- Simple Pac-12-ish shield placeholder -->
-      <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
-        <path d="M8 8h48v26c0 6-3 12-8 16L32 58 16 50c-5-4-8-10-8-16V8z"></path>
-        <text x="32" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="currentColor">12</text>
-      </svg>
+<header class="app-header">
+  <div class="badge">
+    <svg viewBox="0 0 64 64"><path d="M8 8h48v26c0 6-3 12-8 16L32 58 16 50c-5-4-8-10-8-16V8z"/></svg>
+  </div>
+  <h1><span class="scoreboard">PAC-12</span> New Teams — Guessing Game</h1>
+</header>
+
+<main class="container">
+  <section class="controls">
+    <div class="row">
+      <input id="guessInput" type="text" placeholder="Type a team (e.g., Fresno State)" autocomplete="off" />
+      <button id="guessBtn">Guess</button>
+      <button id="restartBtn" class="secondary">Restart</button>
     </div>
-    <h1><span class="scoreboard">PAC-12</span> New Teams — Guessing Game</h1>
-  </header>
+    <div id="timer" class="timer hidden">Timer: 5</div>
+    <div id="legend" class="legend">
+      <span class="chip green">Green = Exact</span>
+      <span class="chip yellow">Yellow = Close</span>
+      <span class="chip red">Red = No match</span>
+    </div>
+  </section>
 
-  <main class="container">
-    <section class="controls">
-      <div class="row">
-        <input id="guessInput" type="text" placeholder="Type a team (e.g., Boise State)" autocomplete="off" />
-        <button id="guessBtn">Guess</button>
-        <button id="restartBtn" class="secondary">Restart</button>
-      </div>
-      <div id="timer" class="timer hidden" aria-live="polite">Timer: 5</div>
-      <div id="legend" class="legend">
-        <span class="chip green">Green = Exact</span>
-        <span class="chip yellow">Yellow = Close</span>
-        <span class="chip red">Red = No match</span>
-      </div>
-    </section>
+  <section class="table-wrap">
+    <table class="grid">
+      <thead>
+        <tr>
+          <th>Team</th><th>State</th><th>City</th><th>Team Colors</th><th>Mascot</th><th>Stadium Size</th><th>Previous Conference</th>
+        </tr>
+      </thead>
+      <tbody id="gridBody"></tbody>
+    </table>
+  </section>
 
-    <section class="table-wrap">
-      <table class="grid" aria-label="Guess results">
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th>State</th>
-            <th>City</th>
-            <th>Team Colors</th>
-            <th>Mascot</th>
-            <th>Stadium Size</th>
-            <th>Previous Conference</th>
-          </tr>
-        </thead>
-        <tbody id="gridBody"></tbody>
-      </table>
-    </section>
+  <section id="winCard" class="win-card hidden"></section>
+</main>
 
-    <section id="winCard" class="win-card hidden" aria-live="polite"></section>
-  </main>
+<footer class="footer">
+  <small>Pac-12-inspired theme. Single-round gameplay. Mobile-friendly.</small>
+</footer>
 
-  <footer class="footer">
-    <small>Pac-12-inspired theme. Single-round gameplay. Mobile-friendly.</small>
-  </footer>
-
-  <script src="app.js" type="module"></script>
+<script src="/app.js" type="module"></script>
 </body>
 </html>
